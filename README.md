@@ -59,6 +59,7 @@ This repo is designed for teams and builders asking questions like:
 - [FAQ](docs/faq.md)
 - [Tool-Agnostic Principle](docs/tool-agnostic-principle.md)
 - [Daily Use and Continuous Improvement](docs/daily-use-and-improvement.md)
+- [Daily Path](docs/daily-path.md)
 - [Mixed-Agent Workflow](docs/mixed-agent-workflow.md)
 - [Workflow Diagrams](docs/workflow-diagrams.md)
 - [Mermaid Workflow Diagrams](docs/workflow-diagrams-mermaid.md)
@@ -275,6 +276,8 @@ If you are:
 - making a big architecture or roadmap change → use [design-change package prompt](prompts/design-change-package.md)
 - working across Claude Code and Codex → read [Mixed-Agent Workflow](docs/mixed-agent-workflow.md), [adapters/claude-code.md](adapters/claude-code.md), and [adapters/codex.md](adapters/codex.md)
 - evaluating a new code agent → use [adapters/generic-agent-checklist.md](adapters/generic-agent-checklist.md) and [adapters/agent-evaluation-scorecard.md](adapters/agent-evaluation-scorecard.md)
+- trying to use this repo day-to-day without overhead → read [Daily Path](docs/daily-path.md)
+- reviewing your first real use of the playbook → read [First Real-Use Retrospective Guide](docs/first-real-use-retrospective-guide.md)
 
 ---
 
