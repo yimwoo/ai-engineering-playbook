@@ -10,6 +10,7 @@ It provides:
 - starter kits for lightweight, standard, and enterprise-scale adoption
 - examples for new projects and existing codebase migration
 - a document-driven operating model for large-scale software development with code agents
+- a tool-agnostic approach that works across Claude Code, Codex, and similar code agents
 
 ---
 
@@ -33,6 +34,8 @@ But they often struggle with large-scale software development because of:
 
 This repository gives you a practical system to address those problems.
 
+It is intentionally designed to stay useful across different code agents instead of binding your workflow to one vendor-specific tool surface.
+
 ---
 
 ## What problem does this solve?
@@ -54,6 +57,8 @@ This repo is designed for teams and builders asking questions like:
 - [Operating Model](docs/operating-model.md)
 - [Prompts](docs/prompts.md)
 - [FAQ](docs/faq.md)
+- [Tool-Agnostic Principle](docs/tool-agnostic-principle.md)
+- [Daily Use and Continuous Improvement](docs/daily-use-and-improvement.md)
 - [Status Update Protocol](docs/status-update-protocol.md)
 - [Design Change Packages](docs/design-change-packages.md)
 - [Adopting in Existing Repos](docs/adopting-in-existing-repos.md)
@@ -184,12 +189,22 @@ Worked examples for:
 - enterprise-product projects
 - existing repo migration
 
+### `notes/`, `patterns/`, `retros/`, `experiments/`
+A personal operating layer for:
+- weekly learning logs
+- tool comparison notes
+- reusable patterns
+- retrospectives
+- lightweight experiments before promotion into the core playbook
+
 ### `docs/`
 Reference guides for:
 - getting started
 - operating model
 - prompt usage
 - FAQ
+- tool-agnostic workflow principles
+- daily use and continuous improvement
 - status updates
 - design-change packages
 - migration/adoption guidance
