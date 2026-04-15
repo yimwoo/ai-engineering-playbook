@@ -57,6 +57,8 @@ This repo is designed for teams and builders asking questions like:
 - [Status Update Protocol](docs/status-update-protocol.md)
 - [Design Change Packages](docs/design-change-packages.md)
 - [Adopting in Existing Repos](docs/adopting-in-existing-repos.md)
+- [Messy Existing Repo Rescue Guide](docs/messy-existing-repo-rescue.md)
+- [GitHub Metadata Suggestions](docs/github-metadata-suggestions.md)
 
 ---
 
@@ -191,6 +193,8 @@ Reference guides for:
 - status updates
 - design-change packages
 - migration/adoption guidance
+- messy existing repo rescue
+- GitHub metadata and discoverability suggestions
 
 ---
 
@@ -239,7 +243,7 @@ This playbook is especially helpful for:
 
 If you are:
 - starting a new project → read [Getting Started](docs/getting-started.md)
-- working in a messy existing repo → use [repo audit prompt](prompts/repo-audit.md)
+- working in a messy existing repo → read [Messy Existing Repo Rescue Guide](docs/messy-existing-repo-rescue.md) and use [repo audit prompt](prompts/repo-audit.md)
 - planning the next milestone → use [orchestrator kickoff prompt](prompts/orchestrator-kickoff.md)
 - making a big architecture or roadmap change → use [design-change package prompt](prompts/design-change-package.md)
 
