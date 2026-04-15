@@ -59,6 +59,7 @@ This repo is designed for teams and builders asking questions like:
 - [FAQ](docs/faq.md)
 - [Tool-Agnostic Principle](docs/tool-agnostic-principle.md)
 - [Daily Use and Continuous Improvement](docs/daily-use-and-improvement.md)
+- [Mixed-Agent Workflow](docs/mixed-agent-workflow.md)
 - [Status Update Protocol](docs/status-update-protocol.md)
 - [Design Change Packages](docs/design-change-packages.md)
 - [Adopting in Existing Repos](docs/adopting-in-existing-repos.md)
@@ -183,6 +184,13 @@ Ready-to-copy starter bundles for:
 - standard adoption
 - enterprise-style adoption
 
+### `adapters/`
+Tool-specific mapping notes for:
+- Claude Code
+- Codex
+
+These adapter docs explain how to use the same playbook with different agents without making the workflow depend on one tool.
+
 ### `examples/`
 Worked examples for:
 - startup-lightweight projects
@@ -257,10 +265,11 @@ This playbook is especially helpful for:
 ## Suggested starting points
 
 If you are:
-- starting a new project → read [Getting Started](docs/getting-started.md)
-- working in a messy existing repo → read [Messy Existing Repo Rescue Guide](docs/messy-existing-repo-rescue.md) and use [repo audit prompt](prompts/repo-audit.md)
-- planning the next milestone → use [orchestrator kickoff prompt](prompts/orchestrator-kickoff.md)
-- making a big architecture or roadmap change → use [design-change package prompt](prompts/design-change-package.md)
+- starting a new project -> read [Getting Started](docs/getting-started.md)
+- working in a messy existing repo -> read [Messy Existing Repo Rescue Guide](docs/messy-existing-repo-rescue.md) and use [repo audit prompt](prompts/repo-audit.md)
+- planning the next milestone -> use [orchestrator kickoff prompt](prompts/orchestrator-kickoff.md)
+- making a big architecture or roadmap change -> use [design-change package prompt](prompts/design-change-package.md)
+- working across Claude Code and Codex -> read [Mixed-Agent Workflow](docs/mixed-agent-workflow.md), [adapters/claude-code.md](adapters/claude-code.md), and [adapters/codex.md](adapters/codex.md)
 
 ---
 
