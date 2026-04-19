@@ -10,12 +10,16 @@ First:
 - propose a right-sized alignment plan
 
 ## Recommended Sequence
-1. create `PROJECT_CONSTITUTION.md`
-2. create `CLAUDE.md`
-3. create `status.md`
-4. audit current docs and architecture
+1. audit current docs, architecture, and repo topology
+2. classify existing docs as keep, fix, merge, archive, or superseded
+3. define a right-sized alignment plan
+4. add `PROJECT_CONSTITUTION.md`, `CLAUDE.md`, and `status.md` as the new operating layer
 5. map existing structure to this playbook
-6. add ADRs, module specs, and task packets incrementally
+6. add ADRs, module specs, repo maps, and task packets incrementally
 
 ## Rule
 Align to the operating model, not necessarily to identical folder names.
+
+## Source-of-Truth Rule
+Do not let newly added governance docs silently compete with existing docs.
+When a newer doc replaces an older one, mark the older doc clearly as superseded and point to the new canonical source.

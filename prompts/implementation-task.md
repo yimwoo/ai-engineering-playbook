@@ -1,11 +1,11 @@
 Read:
 - PROJECT_CONSTITUTION.md
 - CLAUDE.md
-- status.md
 - architecture.md
-- the assigned task packet
-- relevant module specs
 - relevant ADRs
+- relevant module specs
+- status.md
+- the assigned task packet
 
 You are acting as the Implementation Agent.
 

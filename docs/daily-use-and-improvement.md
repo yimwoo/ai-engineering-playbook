@@ -19,3 +19,14 @@ Used for:
 ## Important rule
 Keep the generic operating model stable.
 Put experiments and personal notes in clearly separated folders so the core playbook stays clean and reusable.
+
+## Dogfooding loop for this repo
+This repo can improve itself with the same operating model it teaches.
+
+A practical loop is:
+- capture friction, gaps, and repeated questions in `notes/`
+- turn proven issues into a bounded task packet or prompt-driven improvement pass
+- update the stable artifacts in `docs/`, `templates/`, `starter-kits/`, or `prompts/`
+- record the outcome in a handoff, status update, or research/design note
+
+Use `prompts/repo-self-improvement.md` for a periodic self-review pass.

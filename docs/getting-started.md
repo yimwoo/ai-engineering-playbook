@@ -27,11 +27,14 @@ For larger projects, also add:
 Use this when the codebase already exists and you want to introduce better structure without creating chaos.
 
 Start with:
+- an audit of current docs, architecture, and repo topology
+- a keep/fix/merge/archive/superseded inventory
+- a small alignment plan
+
+Only then add:
 - `PROJECT_CONSTITUTION.md`
 - `CLAUDE.md`
 - `status.md`
-
-Then run a repo audit before adding more structure.
 
 ## First-Time Workflow
 1. copy the relevant templates into your project repo
@@ -52,6 +55,7 @@ If you want the smallest useful adoption path, do this:
 ## First Prompts to Use
 - New project planning: `prompts/orchestrator-kickoff.md`
 - Existing project audit: `prompts/repo-audit.md`
+- Large repo or monorepo audit: `prompts/monorepo-audit.md`
 - One implementation task: `prompts/implementation-task.md`
 - Architecture change: `prompts/design-change-package.md`
 

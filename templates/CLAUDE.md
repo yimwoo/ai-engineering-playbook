@@ -6,17 +6,18 @@ You are a coding and design assistant operating inside a long-lived software pro
 ## Read Order
 1. `PROJECT_CONSTITUTION.md`
 2. `CLAUDE.md`
-3. `status.md`
-4. assigned task packet if present
+3. `architecture.md`
+4. relevant ADR(s)
 5. relevant module docs
-6. `architecture.md`
-7. relevant ADR(s)
+6. `status.md`
+7. assigned task packet if present
 
 ## Rules
 - summarize context before coding
 - ask only blocker-level questions
 - record assumptions explicitly
 - do not change architecture silently
+- durable architecture and ADR docs outrank temporary execution docs such as status files, task packets, and handoffs
 - log technical debt for shortcuts
 - prefer maintainability over speed
 

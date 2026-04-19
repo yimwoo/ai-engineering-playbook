@@ -21,7 +21,7 @@ Review the completed work for:
 - security/operational concerns
 
 Return findings grouped as:
-1. Critical
+1. Blockers
 2. Important
 3. Optional
 4. Merge readiness summary

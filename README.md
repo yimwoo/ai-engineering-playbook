@@ -55,6 +55,7 @@ This repo is designed for teams and builders asking questions like:
 - [Overview](docs/overview.md)
 - [Getting Started](docs/getting-started.md)
 - [Operating Model](docs/operating-model.md)
+- [Source of Truth and Doc Lifecycle](docs/source-of-truth-and-doc-lifecycle.md)
 - [Prompts](docs/prompts.md)
 - [FAQ](docs/faq.md)
 - [Tool-Agnostic Principle](docs/tool-agnostic-principle.md)
@@ -66,6 +67,7 @@ This repo is designed for teams and builders asking questions like:
 - [Status Update Protocol](docs/status-update-protocol.md)
 - [Design Change Packages](docs/design-change-packages.md)
 - [Adopting in Existing Repos](docs/adopting-in-existing-repos.md)
+- [Monorepo and Multi-Project Adoption](docs/monorepo-and-multi-project-adoption.md)
 - [Messy Existing Repo Rescue Guide](docs/messy-existing-repo-rescue.md)
 - [GitHub Metadata Suggestions](docs/github-metadata-suggestions.md)
 
@@ -124,6 +126,7 @@ Recommended files:
 - `CLAUDE.md`
 - `AGENTS.md`
 - `architecture.md`
+- `repo-map.md` for monorepos or many-subproject repos
 - `roadmap.md`
 - `status.md`
 - `technical-debt.md`
@@ -146,11 +149,12 @@ Recommended files:
 7. require status updates and handoffs after meaningful tasks
 
 ### Existing codebase adoption
-1. start with `PROJECT_CONSTITUTION.md`, `CLAUDE.md`, and `status.md`
-2. use [`prompts/repo-audit.md`](prompts/repo-audit.md)
-3. identify architecture gaps, stale docs, and workflow drift
-4. align incrementally instead of rewriting everything at once
-5. add module specs, ADRs, and task packets only where justified
+1. start with an audit of current docs, architecture, and repo topology
+2. use [`prompts/repo-audit.md`](prompts/repo-audit.md) or [`prompts/monorepo-audit.md`](prompts/monorepo-audit.md)
+3. classify existing docs into keep, fix, merge, archive, or superseded
+4. add `PROJECT_CONSTITUTION.md`, `CLAUDE.md`, and `status.md` as the new operating layer only after the audit direction is clear
+5. align incrementally instead of rewriting everything at once
+6. add module specs, ADRs, repo maps, and task packets only where justified
 
 ---
 
@@ -159,6 +163,7 @@ Recommended files:
 ### `templates/`
 Copyable templates for:
 - architecture docs
+- repo maps
 - roadmap docs
 - status tracking
 - technical debt tracking
@@ -175,7 +180,9 @@ Reusable prompts for:
 - implementation tasks
 - review tasks
 - repo audits
+- monorepo audits
 - repo alignment
+- repo self-improvement
 - status updates
 - roadmap refresh
 - design-change packages
@@ -209,6 +216,9 @@ A personal operating layer for:
 - reusable patterns
 - retrospectives
 - lightweight experiments before promotion into the core playbook
+
+### `docs/designs/`, `docs/research/`
+Use these when evaluating structural changes or capturing deeper analysis before promoting stable guidance into the main docs.
 
 ### `docs/`
 Reference guides for:

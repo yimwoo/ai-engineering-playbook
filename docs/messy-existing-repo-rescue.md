@@ -39,7 +39,12 @@ The goal is to make the repo:
 ## Recommended rescue sequence
 
 ### Phase 1: Stabilize the minimum memory system
-Add only:
+Do this first:
+- audit current docs, architecture, and repo topology
+- classify docs as keep, fix, merge, archive, or superseded
+- define a minimal alignment plan
+
+Then add only:
 - `PROJECT_CONSTITUTION.md`
 - `CLAUDE.md`
 - `status.md`
@@ -50,6 +55,7 @@ Why:
 - `status.md` gives the next session a reliable starting point
 
 At this stage, do not try to document the whole system yet.
+Also do not let new docs silently compete with old ones.
 
 ---
 
@@ -57,6 +63,7 @@ At this stage, do not try to document the whole system yet.
 Use:
 - `prompts/repo-audit.md`
 - `prompts/repo-alignment.md`
+- `prompts/monorepo-audit.md` for monorepos or many-subproject repos
 
 Ask the agent to identify:
 - the actual architecture
@@ -71,6 +78,7 @@ Output should include:
 - what to archive
 - what to merge
 - what to create first
+- what should be marked superseded explicitly
 
 ---
 
@@ -134,6 +142,10 @@ Misleading, obsolete, or duplicative.
 
 This is usually more practical than rewriting from scratch.
 
+### 5. Superseded
+Still useful for history, but no longer authoritative.
+Keep it only if it points clearly to the newer canonical source.
+
 ---
 
 ## A practical adoption rule
@@ -168,12 +180,12 @@ Fix: add `technical-debt.md` as soon as shortcuts start accumulating.
 ---
 
 ## Suggested first 7 actions
-1. add `PROJECT_CONSTITUTION.md`
-2. add `CLAUDE.md`
-3. add `status.md`
-4. run a repo audit
-5. identify 3-5 critical modules
-6. document only those modules first
+1. run a repo audit
+2. classify docs into keep, fix, merge, archive, or superseded
+3. add `PROJECT_CONSTITUTION.md`
+4. add `CLAUDE.md`
+5. add `status.md`
+6. identify 3-5 critical modules or subprojects
 7. introduce task packets for risky or cross-cutting work
 
 ---

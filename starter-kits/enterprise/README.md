@@ -7,6 +7,7 @@ Use this starter kit when you need stronger governance, parallel work support, a
 - `CLAUDE.md`
 - `AGENTS.md`
 - `architecture.md`
+- `repo-map.md` for monorepos or many-subproject repos
 - `roadmap.md`
 - `status.md`
 - `technical-debt.md`

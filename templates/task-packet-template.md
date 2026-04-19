@@ -15,9 +15,10 @@ What is explicitly excluded.
 ## Required Reading
 - PROJECT_CONSTITUTION.md
 - CLAUDE.md
-- status.md
-- relevant module docs
+- architecture.md
 - relevant ADRs
+- relevant module docs
+- status.md
 
 ## Constraints
 List important implementation constraints.
