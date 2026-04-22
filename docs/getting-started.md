@@ -55,6 +55,7 @@ If you want the smallest useful adoption path, do this:
 ## First Prompts to Use
 - New project planning: `prompts/orchestrator-kickoff.md`
 - Existing project audit: `prompts/repo-audit.md`
+- Existing project doc and workflow audit: `prompts/repo-docs-audit.md`
 - Large repo or monorepo audit: `prompts/monorepo-audit.md`
 - One implementation task: `prompts/implementation-task.md`
 - Architecture change: `prompts/design-change-package.md`

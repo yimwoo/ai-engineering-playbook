@@ -6,7 +6,7 @@ AI Engineering Playbook helps teams and solo builders use code agents like Claud
 
 It provides:
 - project governance templates for AI-assisted development
-- practical prompts for planning, architecture, implementation, review, and repo audits
+- practical prompts for planning, architecture, implementation, review, repo audits, and documentation audits
 - starter kits for lightweight, standard, and enterprise-scale adoption
 - examples for new projects and existing codebase migration
 - a document-driven operating model for large-scale software development with code agents
@@ -150,7 +150,7 @@ Recommended files:
 
 ### Existing codebase adoption
 1. start with an audit of current docs, architecture, and repo topology
-2. use [`prompts/repo-audit.md`](prompts/repo-audit.md) or [`prompts/monorepo-audit.md`](prompts/monorepo-audit.md)
+2. use [`prompts/repo-audit.md`](prompts/repo-audit.md), [`prompts/repo-docs-audit.md`](prompts/repo-docs-audit.md), or [`prompts/monorepo-audit.md`](prompts/monorepo-audit.md) depending on whether the main issue is broad repo understanding, agent-facing docs, or large-repo topology
 3. classify existing docs into keep, fix, merge, archive, or superseded
 4. add `PROJECT_CONSTITUTION.md`, `CLAUDE.md`, and `status.md` as the new operating layer only after the audit direction is clear
 5. align incrementally instead of rewriting everything at once
@@ -180,6 +180,7 @@ Reusable prompts for:
 - implementation tasks
 - review tasks
 - repo audits
+- repo documentation audits
 - monorepo audits
 - repo alignment
 - repo self-improvement
@@ -281,7 +282,7 @@ This playbook is especially helpful for:
 
 If you are:
 - starting a new project → read [Getting Started](docs/getting-started.md)
-- working in a messy existing repo → read [Messy Existing Repo Rescue Guide](docs/messy-existing-repo-rescue.md) and use [repo audit prompt](prompts/repo-audit.md)
+- working in a messy existing repo → read [Messy Existing Repo Rescue Guide](docs/messy-existing-repo-rescue.md) and use the [repo audit prompt](prompts/repo-audit.md) or [repo docs audit prompt](prompts/repo-docs-audit.md)
 - planning the next milestone → use [orchestrator kickoff prompt](prompts/orchestrator-kickoff.md)
 - making a big architecture or roadmap change → use [design-change package prompt](prompts/design-change-package.md)
 - working across Claude Code and Codex → read [Mixed-Agent Workflow](docs/mixed-agent-workflow.md), [adapters/claude-code.md](adapters/claude-code.md), and [adapters/codex.md](adapters/codex.md)

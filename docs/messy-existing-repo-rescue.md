@@ -62,6 +62,7 @@ Also do not let new docs silently compete with old ones.
 ### Phase 2: Audit reality before restructuring
 Use:
 - `prompts/repo-audit.md`
+- `prompts/repo-docs-audit.md` when the main friction is doc sprawl, unclear onboarding, or poor agent workflow guidance
 - `prompts/repo-alignment.md`
 - `prompts/monorepo-audit.md` for monorepos or many-subproject repos
 
@@ -192,10 +193,11 @@ Fix: add `technical-debt.md` as soon as shortcuts start accumulating.
 
 ## Suggested prompt flow
 1. `prompts/repo-audit.md`
-2. `prompts/repo-alignment.md`
-3. `prompts/module-spec-generation.md`
-4. `prompts/orchestrator-kickoff.md`
-5. `prompts/implementation-task.md`
+2. `prompts/repo-docs-audit.md` when documentation quality is the first blocker
+3. `prompts/repo-alignment.md`
+4. `prompts/module-spec-generation.md`
+5. `prompts/orchestrator-kickoff.md`
+6. `prompts/implementation-task.md`
 
 ---
 

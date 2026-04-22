@@ -17,6 +17,11 @@ First:
 5. map existing structure to this playbook
 6. add ADRs, module specs, repo maps, and task packets incrementally
 
+## Which audit prompt to start with
+- Use `prompts/repo-audit.md` for a general existing-repo audit.
+- Use `prompts/repo-docs-audit.md` when the biggest problem is agent-facing docs, onboarding flow, repeated-session usability, or workflow clarity.
+- Use `prompts/monorepo-audit.md` when repo topology, ownership boundaries, or multi-subproject verification scope are the main risks.
+
 ## Rule
 Align to the operating model, not necessarily to identical folder names.
 
