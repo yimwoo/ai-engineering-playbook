@@ -8,20 +8,12 @@ This guide helps you adopt the playbook in a new or existing project repo.
 ### Mode 1: New project
 Use this when you are starting from scratch and want an initial operating model before coding heavily.
 
-Start with:
-- `PROJECT_CONSTITUTION.md`
-- `CLAUDE.md`
-- `architecture.md`
-- `roadmap.md`
-- `status.md`
-- `technical-debt.md`
+Pick one starter kit first, then copy that exact file set into your repo:
+- lightweight: `starter-kits/lightweight/` (`PROJECT_CONSTITUTION.md`, `CLAUDE.md`, `architecture.md`, `status.md`)
+- standard: `starter-kits/standard/` (lightweight plus `roadmap.md`, `technical-debt.md`, `modules/`, `decisions/`)
+- enterprise: `starter-kits/enterprise/` (standard plus `AGENTS.md`, `repo-map.md`, `task-packets/`, `handoffs/`)
 
-For larger projects, also add:
-- `AGENTS.md`
-- `modules/`
-- `decisions/`
-- `task-packets/`
-- `handoffs/`
+If unsure, start with lightweight and add structure only when coordination or architecture complexity demands it.
 
 ### Mode 2: Existing project
 Use this when the codebase already exists and you want to introduce better structure without creating chaos.
@@ -37,18 +29,19 @@ Only then add:
 - `status.md`
 
 ## First-Time Workflow
-1. copy the relevant templates into your project repo
-2. fill in architecture and roadmap at a high level
-3. define the current milestone
-4. define the first few module boundaries
-5. ask the agent to plan the milestone before coding
-6. convert planned work into bounded tasks
-7. require status updates and handoffs after meaningful work
+1. pick a starter kit (`lightweight`, `standard`, or `enterprise`)
+2. copy that starter kit into your project repo
+3. fill in architecture and roadmap at a high level (if your selected starter includes `roadmap.md`)
+4. define the current milestone
+5. define the first few module boundaries (if your selected starter includes `modules/`)
+6. ask the agent to plan the milestone before coding
+7. convert planned work into bounded tasks
+8. require status updates and handoffs after meaningful work
 
 ## Minimal Quickstart
 If you want the smallest useful adoption path, do this:
-1. copy `PROJECT_CONSTITUTION.md`, `CLAUDE.md`, and `status.md`
-2. create a simple `architecture.md`
+1. copy `starter-kits/lightweight/` into your project repo
+2. fill in a simple `architecture.md`
 3. use `prompts/orchestrator-kickoff.md`
 4. require `status.md` updates after meaningful tasks
 
