@@ -26,6 +26,7 @@ Do not load every file for every task.
 - Existing repo analysis: `prompts/repo-audit.md`
 - Existing repo doc and workflow audit: `prompts/repo-docs-audit.md`
 - Large repo or monorepo analysis: `prompts/monorepo-audit.md`
+- Post-audit repo alignment planning: `prompts/repo-alignment.md`
 - One bounded implementation task: `prompts/implementation-task.md`
 - Architecture/design work: `prompts/architecture-analysis.md`
 - Major roadmap or design shift: `prompts/design-change-package.md`
