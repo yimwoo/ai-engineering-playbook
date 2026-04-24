@@ -4,5 +4,9 @@
 .agent/*
 !.agent/bootstrapped
 
+# --- Local agent tool configs (keep out of origin) ---
+.agenteam/
+.codex/
+
 # macOS
 .DS_Store
