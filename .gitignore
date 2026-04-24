@@ -1,0 +1,8 @@
+# --- AGENT_PROTOCOL.md runtime state ---
+# Everything under .agent/ is transient session scratch except the bootstrap
+# sentinel, which must be tracked so the re-bootstrap guard in Phase 1 works.
+.agent/*
+!.agent/bootstrapped
+
+# macOS
+.DS_Store
