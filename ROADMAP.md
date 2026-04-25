@@ -4,16 +4,16 @@
 Use small tooling-first milestones to protect a documentation-heavy repository from drift. Each milestone should land executable checks before broadening the playbook surface area.
 
 ## Active Milestone
-`m1` - repository validation baseline
+`m2` - reference integrity checks
 
 ## Milestones
 
 ### `m1` Repository validation baseline
 Goal: establish a canonical executable check for the repo's documented structure.
 
-- [ ] Add `tools/validate_playbook.py` to verify that starter kits and examples contain the files promised by `README.md`.
-- [ ] Add `tests/test_validate_playbook.py` covering the expected file sets for lightweight, standard, and enterprise starter kits plus the shipped examples.
-- [ ] Add a simple invocation path (`python3 -m unittest tests.test_validate_playbook`) to the validator workflow and document it inline where needed.
+- [x] Add `tools/validate_playbook.py` to verify that starter kits and examples contain the files promised by `README.md`.
+- [x] Add `tests/test_validate_playbook.py` covering the expected file sets for lightweight, standard, and enterprise starter kits plus the shipped examples.
+- [x] Add a simple invocation path (`python3 -m unittest tests.test_validate_playbook`) to the validator workflow and document it inline where needed.
 
 Exit criteria:
 - A single local test command validates the repo's documented package structure.
