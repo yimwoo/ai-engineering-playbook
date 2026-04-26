@@ -4,7 +4,7 @@
 Use small tooling-first milestones to protect a documentation-heavy repository from drift. Each milestone should land executable checks before broadening the playbook surface area.
 
 ## Active Milestone
-`m2` - reference integrity checks
+`m3` - content inventory output
 
 ## Milestones
 
@@ -22,8 +22,8 @@ Exit criteria:
 ### `m2` Reference integrity checks
 Goal: catch broken high-value references before documentation changes land.
 
-- [ ] Extend `tools/validate_playbook.py` to validate high-signal relative links from `README.md` and selected `docs/` indexes.
-- [ ] Add regression tests for missing or renamed linked files.
+- [x] Extend `tools/validate_playbook.py` to validate high-signal relative links from `README.md` and selected `docs/` indexes.
+- [x] Add regression tests for missing or renamed linked files.
 
 Exit criteria:
 - The validator fails on broken top-level references that would derail onboarding.

@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+import re
 import sys
 
 
@@ -18,6 +19,13 @@ class StructureCheck:
     name: str
     root: str
     required_entries: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class RelativeLinkCheck:
+    """One markdown file whose high-signal relative links should resolve."""
+
+    source: str
 
 
 CHECKS: tuple[StructureCheck, ...] = (
@@ -101,12 +109,46 @@ CHECKS: tuple[StructureCheck, ...] = (
     ),
 )
 
+RELATIVE_LINK_CHECKS: tuple[RelativeLinkCheck, ...] = (
+    RelativeLinkCheck(source="README.md"),
+    RelativeLinkCheck(source="docs/getting-started.md"),
+    RelativeLinkCheck(source="docs/prompts.md"),
+)
+
+MARKDOWN_LINK_PATTERN = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
+
 
 def _entry_exists(base_dir: Path, entry: str) -> bool:
     path = base_dir / entry.rstrip("/")
     if entry.endswith("/"):
         return path.is_dir()
     return path.is_file()
+
+
+def _normalize_link_target(target: str) -> str:
+    normalized = target.strip()
+    if normalized.startswith("<") and normalized.endswith(">"):
+        normalized = normalized[1:-1].strip()
+    return normalized
+
+
+def _is_relative_link_target(target: str) -> bool:
+    return not (
+        "://" in target
+        or target.startswith("#")
+        or target.startswith("mailto:")
+    )
+
+
+def iter_relative_link_targets(markdown_text: str) -> tuple[str, ...]:
+    """Extract relative markdown link targets from one markdown document."""
+
+    targets: list[str] = []
+    for match in MARKDOWN_LINK_PATTERN.finditer(markdown_text):
+        target = _normalize_link_target(match.group(1))
+        if _is_relative_link_target(target):
+            targets.append(target)
+    return tuple(targets)
 
 
 def validate_structure_check(repo_root: Path, check: StructureCheck) -> list[str]:
@@ -125,13 +167,45 @@ def validate_structure_check(repo_root: Path, check: StructureCheck) -> list[str
     return errors
 
 
+def validate_relative_link_check(
+    repo_root: Path,
+    check: RelativeLinkCheck,
+) -> list[str]:
+    """Return validation errors for one markdown file's relative links."""
+
+    source_path = repo_root / check.source
+    if not source_path.is_file():
+        return [f"relative links: missing source `{check.source}`"]
+
+    source_text = source_path.read_text(encoding="utf-8")
+    errors: list[str] = []
+
+    for target in iter_relative_link_targets(source_text):
+        target_path_text, _, _fragment = target.partition("#")
+        resolved_path = (source_path.parent / target_path_text).resolve()
+
+        if target_path_text.endswith("/"):
+            exists = resolved_path.is_dir()
+        else:
+            exists = resolved_path.is_file()
+
+        if not exists:
+            errors.append(
+                f"relative links: `{check.source}` -> `{target}` is missing"
+            )
+
+    return errors
+
+
 def validate_playbook(repo_root: Path | None = None) -> list[str]:
-    """Return all starter-kit and example validation errors."""
+    """Return all starter-kit/example and high-signal link validation errors."""
 
     resolved_root = repo_root or Path(__file__).resolve().parents[1]
     errors: list[str] = []
     for check in CHECKS:
         errors.extend(validate_structure_check(resolved_root, check))
+    for check in RELATIVE_LINK_CHECKS:
+        errors.extend(validate_relative_link_check(resolved_root, check))
     return errors
 
 
@@ -144,7 +218,7 @@ def main() -> int:
         return 1
 
     print(
-        "playbook validation passed for starter-kits and examples. "
+        "playbook validation passed for starter-kits, examples, and selected links. "
         "Run `python3 -m unittest tests.test_validate_playbook` for regression tests."
     )
     return 0
