@@ -1,27 +1,27 @@
 ---
 mode: execute
 current_milestone: m3
-next_action: Add a machine-readable inventory export describing prompts, starter kits, templates, and examples.
+next_action: Wire the validator and inventory export into a canonical CI or automation check.
 last_outcome: CODE_LANDED
 last_commit: none
-last_session_date: 2026-04-26
+last_session_date: 2026-04-27
 ---
 
 # STATE
 
 ## Last Session
-- task: validate high-signal onboarding links in README and docs indexes
+- task: add a machine-readable inventory export for prompts, starter kits, templates, and examples
 - changes:
-  - extended `tools/validate_playbook.py` to validate relative links from `README.md`, `docs/getting-started.md`, and `docs/prompts.md`
-  - added regression coverage for link extraction and missing-target failures alongside the existing structure validation tests
-  - advanced the roadmap to `m3` after completing the `m2` reference integrity milestone
+  - extended `tools/validate_playbook.py` with deterministic inventory generation and a `--inventory-out` CLI option
+  - added regression coverage for tracked-path ordering, inventory content, and inventory file output
+  - completed the `m3` content inventory milestone and queued CI wiring as the next follow-up
 - verification:
   - `python3 -m unittest tests.test_validate_playbook`: pass
-  - `python3 tools/validate_playbook.py`: pass
-  - `git push -u origin HEAD`: pending
+  - `python3 tools/validate_playbook.py --inventory-out "$TMPDIR/playbook-inventory.json"`: pass
+  - `git push -u origin HEAD`: deferred (network access unavailable in sandbox)
 - commits:
-  - pending: `m2: validate high-signal onboarding links`
-- push: pending
+  - pending: `m3: add machine-readable content inventory export`
+- push: deferred
 
 ## Blockers
 - none
@@ -38,3 +38,4 @@ last_session_date: 2026-04-26
 - `.agent/bootstrapped` records the stable bootstrap content commit (`54a7bf0`) because the sandbox cannot push branch state upstream.
 - `tools/validate_playbook.py` treats starter-kit and example promises as minimum required entries, so extra illustrative files do not fail validation.
 - High-signal link validation is intentionally allowlisted to `README.md`, `docs/getting-started.md`, and `docs/prompts.md` so onboarding coverage expands incrementally instead of turning into brittle repo-wide markdown linting.
+- `tools/validate_playbook.py --inventory-out <path>` emits deterministic JSON with top-level prompt/template paths and per-example/per-starter-kit file inventories sorted for stable diffs.

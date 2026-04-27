@@ -6,7 +6,9 @@ Canonical test command:
 
 from __future__ import annotations
 
+import argparse
 from dataclasses import dataclass
+import json
 from pathlib import Path
 import re
 import sys
@@ -151,6 +153,15 @@ def iter_relative_link_targets(markdown_text: str) -> tuple[str, ...]:
     return tuple(targets)
 
 
+def iter_tracked_paths(root: Path) -> tuple[str, ...]:
+    """Return deterministic relative file paths underneath one repo subtree."""
+
+    return tuple(
+        str(path.relative_to(root))
+        for path in sorted(path for path in root.rglob("*") if path.is_file())
+    )
+
+
 def validate_structure_check(repo_root: Path, check: StructureCheck) -> list[str]:
     """Return validation errors for one documented structure check."""
 
@@ -209,13 +220,83 @@ def validate_playbook(repo_root: Path | None = None) -> list[str]:
     return errors
 
 
-def main() -> int:
+def generate_inventory(repo_root: Path | None = None) -> dict[str, object]:
+    """Build a deterministic machine-readable inventory for key repo assets."""
+
+    resolved_root = repo_root or Path(__file__).resolve().parents[1]
+    prompts_dir = resolved_root / "prompts"
+    templates_dir = resolved_root / "templates"
+    starter_kits_dir = resolved_root / "starter-kits"
+    examples_dir = resolved_root / "examples"
+
+    starter_kits = []
+    for path in sorted(path for path in starter_kits_dir.iterdir() if path.is_dir()):
+        starter_kits.append(
+            {
+                "name": path.name,
+                "path": str(path.relative_to(resolved_root)),
+                "files": iter_tracked_paths(path),
+            }
+        )
+
+    examples = []
+    for path in sorted(path for path in examples_dir.iterdir() if path.is_dir()):
+        examples.append(
+            {
+                "name": path.name,
+                "path": str(path.relative_to(resolved_root)),
+                "files": iter_tracked_paths(path),
+            }
+        )
+
+    return {
+        "prompts": tuple(
+            str(path.relative_to(resolved_root))
+            for path in sorted(path for path in prompts_dir.iterdir() if path.is_file())
+        ),
+        "templates": tuple(
+            str(path.relative_to(resolved_root))
+            for path in sorted(path for path in templates_dir.iterdir() if path.is_file())
+        ),
+        "starter_kits": starter_kits,
+        "examples": examples,
+    }
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    """Parse the validator CLI arguments."""
+
+    parser = argparse.ArgumentParser(
+        description=(
+            "Validate documented playbook structure and optionally export a "
+            "machine-readable inventory."
+        )
+    )
+    parser.add_argument(
+        "--inventory-out",
+        type=Path,
+        help="Write the generated inventory JSON to this path.",
+    )
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
     errors = validate_playbook()
     if errors:
         print("playbook validation failed:")
         for error in errors:
             print(f"- {error}")
         return 1
+
+    if args.inventory_out is not None:
+        inventory = generate_inventory()
+        args.inventory_out.parent.mkdir(parents=True, exist_ok=True)
+        args.inventory_out.write_text(
+            json.dumps(inventory, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        print(f"wrote inventory to `{args.inventory_out}`")
 
     print(
         "playbook validation passed for starter-kits, examples, and selected links. "
@@ -225,4 +306,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main(sys.argv[1:]))

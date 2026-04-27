@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import tempfile
 from pathlib import Path
 import unittest
@@ -7,7 +8,10 @@ import unittest
 from tools.validate_playbook import (
     CHECKS,
     RELATIVE_LINK_CHECKS,
+    generate_inventory,
     iter_relative_link_targets,
+    iter_tracked_paths,
+    main,
     validate_playbook,
     validate_relative_link_check,
     validate_structure_check,
@@ -99,6 +103,55 @@ class ValidatePlaybookTest(unittest.TestCase):
                     "relative links: `docs/getting-started.md` -> "
                     "`../prompts/missing.md` is missing"
                 ],
+            )
+
+    def test_iter_tracked_paths_returns_sorted_relative_files(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            (root / "b.md").write_text("b\n", encoding="utf-8")
+            (root / "nested").mkdir()
+            (root / "nested" / "a.md").write_text("a\n", encoding="utf-8")
+
+            self.assertEqual(
+                iter_tracked_paths(root),
+                ("b.md", "nested/a.md"),
+            )
+
+    def test_inventory_contains_expected_top_level_assets(self) -> None:
+        inventory = generate_inventory(REPO_ROOT)
+
+        self.assertEqual(inventory["prompts"][0], "prompts/architecture-analysis.md")
+        self.assertIn("templates/AGENTS.md", inventory["templates"])
+        self.assertEqual(
+            [item["name"] for item in inventory["starter_kits"]],
+            ["enterprise", "lightweight", "standard"],
+        )
+        self.assertEqual(
+            [item["name"] for item in inventory["examples"]],
+            [
+                "enterprise-product",
+                "existing-repo-migration",
+                "startup-lightweight",
+            ],
+        )
+        self.assertIn(
+            "handoffs/_template.md",
+            inventory["starter_kits"][0]["files"],
+        )
+
+    def test_main_writes_inventory_json(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            output_path = Path(tmp_dir) / "inventory.json"
+
+            exit_code = main(["--inventory-out", str(output_path)])
+
+            self.assertEqual(exit_code, 0)
+            self.assertTrue(output_path.is_file())
+            inventory = json.loads(output_path.read_text(encoding="utf-8"))
+            self.assertIn("prompts/review-task.md", inventory["prompts"])
+            self.assertEqual(
+                inventory["examples"][0]["path"],
+                "examples/enterprise-product",
             )
 
 

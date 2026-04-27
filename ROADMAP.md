@@ -31,8 +31,8 @@ Exit criteria:
 ### `m3` Content inventory output
 Goal: make repo evolution easier to review and maintain.
 
-- [ ] Add a machine-readable inventory export describing prompts, starter kits, templates, and examples.
-- [ ] Add tests covering inventory generation for newly added assets.
+- [x] Add a machine-readable inventory export describing prompts, starter kits, templates, and examples.
+- [x] Add tests covering inventory generation for newly added assets.
 
 Exit criteria:
 - A deterministic inventory can be generated and verified in CI or local sessions.
