@@ -1,0 +1,27 @@
+name: Playbook Check
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  playbook-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run playbook check
+        run: python3 tools/run_playbook_check.py --inventory-out .agent/artifacts/playbook-inventory.json
+
+      - name: Upload inventory artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: playbook-inventory
+          path: .agent/artifacts/playbook-inventory.json
+          if-no-files-found: error

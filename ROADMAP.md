@@ -4,7 +4,7 @@
 Use small tooling-first milestones to protect a documentation-heavy repository from drift. Each milestone should land executable checks before broadening the playbook surface area.
 
 ## Active Milestone
-`m3` - content inventory output
+`m4` - automation hardening
 
 ## Milestones
 
@@ -33,19 +33,29 @@ Goal: make repo evolution easier to review and maintain.
 
 - [x] Add a machine-readable inventory export describing prompts, starter kits, templates, and examples.
 - [x] Add tests covering inventory generation for newly added assets.
+- [x] Wire the validator and inventory export into a canonical automation check.
 
 Exit criteria:
 - A deterministic inventory can be generated and verified in CI or local sessions.
 
+### `m4` Automation hardening
+Goal: keep the canonical playbook check from drifting as repo automation evolves.
+
+- [ ] Add regression coverage that verifies the canonical GitHub Actions workflow invokes `tools/run_playbook_check.py`.
+- [ ] Add regression coverage for the published inventory artifact path so workflow changes stay intentional.
+
+Exit criteria:
+- Local regression tests fail when the canonical workflow stops running the wrapper command or publishing the expected inventory artifact.
+
 ## Dependencies
 - `m2` depends on the validation framework from `m1`.
 - `m3` depends on the shared repository traversal helpers introduced in `m1` or `m2`.
+- `m4` depends on the canonical check wiring from `m3`.
 
 ## Risks
 - Repo guidance may continue to drift faster than validation coverage if new content lands without tests.
 - The repo currently has no existing test harness, so the first milestone must keep dependencies minimal and use the Python standard library.
 
 ## Deferred Items
-- CI integration for the validator.
 - Broader linting or markdown style enforcement.
 - Automatic generation of README navigation sections.
