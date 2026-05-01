@@ -22,6 +22,7 @@ from tools.run_playbook_check import DEFAULT_INVENTORY_PATH, main as run_playboo
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+WORKFLOW_PATH = REPO_ROOT / ".github/workflows/playbook-check.yml"
 
 
 class ValidatePlaybookTest(unittest.TestCase):
@@ -156,6 +157,23 @@ class ValidatePlaybookTest(unittest.TestCase):
                 inventory["examples"][0]["path"],
                 "examples/enterprise-product",
             )
+
+    def test_workflow_runs_canonical_wrapper_command(self) -> None:
+        workflow_text = WORKFLOW_PATH.read_text(encoding="utf-8")
+
+        self.assertIn(
+            (
+                "run: python3 tools/run_playbook_check.py --inventory-out "
+                f"{DEFAULT_INVENTORY_PATH}"
+            ),
+            workflow_text,
+        )
+
+    def test_workflow_uploads_expected_inventory_artifact(self) -> None:
+        workflow_text = WORKFLOW_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("name: playbook-inventory", workflow_text)
+        self.assertIn(f"path: {DEFAULT_INVENTORY_PATH}", workflow_text)
 
     @mock.patch("tools.run_playbook_check.subprocess.run")
     def test_run_playbook_check_uses_default_inventory_path(self, run_mock: mock.Mock) -> None:
