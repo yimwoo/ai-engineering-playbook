@@ -43,6 +43,9 @@ Goal: keep the canonical playbook check from drifting as repo automation evolves
 
 - [x] Add regression coverage that verifies the canonical GitHub Actions workflow invokes `tools/run_playbook_check.py`.
 - [x] Add regression coverage for the published inventory artifact path so workflow changes stay intentional.
+- [x] Add regression coverage that verifies `.github/workflows/playbook-check.yml` still triggers on `push` and `pull_request`.
+- [x] Add regression coverage that verifies the workflow keeps Python 3.11 pinned for the canonical check.
+- [ ] Add regression coverage that verifies the workflow still runs on `ubuntu-latest`.
 
 Exit criteria:
 - Local regression tests fail when the canonical workflow stops running the wrapper command or publishing the expected inventory artifact.

@@ -169,6 +169,16 @@ class ValidatePlaybookTest(unittest.TestCase):
             workflow_text,
         )
 
+    def test_workflow_triggers_on_push_and_pull_request(self) -> None:
+        workflow_text = WORKFLOW_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("on:\n  pull_request:\n  push:\n", workflow_text)
+
+    def test_workflow_pins_python_3_11(self) -> None:
+        workflow_text = WORKFLOW_PATH.read_text(encoding="utf-8")
+
+        self.assertIn('python-version: "3.11"', workflow_text)
+
     def test_workflow_uploads_expected_inventory_artifact(self) -> None:
         workflow_text = WORKFLOW_PATH.read_text(encoding="utf-8")
 
