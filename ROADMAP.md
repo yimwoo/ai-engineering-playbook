@@ -4,7 +4,7 @@
 Use small tooling-first milestones to protect a documentation-heavy repository from drift. Each milestone should land executable checks before broadening the playbook surface area.
 
 ## Active Milestone
-`m4` - automation hardening
+`m5` - wrapper cli hardening
 
 ## Milestones
 
@@ -45,10 +45,18 @@ Goal: keep the canonical playbook check from drifting as repo automation evolves
 - [x] Add regression coverage for the published inventory artifact path so workflow changes stay intentional.
 - [x] Add regression coverage that verifies `.github/workflows/playbook-check.yml` still triggers on `push` and `pull_request`.
 - [x] Add regression coverage that verifies the workflow keeps Python 3.11 pinned for the canonical check.
-- [ ] Add regression coverage that verifies the workflow still runs on `ubuntu-latest`.
+- [x] Add regression coverage that verifies the workflow still runs on `ubuntu-latest`.
 
 Exit criteria:
 - Local regression tests fail when the canonical workflow stops running the wrapper command or publishing the expected inventory artifact.
+
+### `m5` Wrapper CLI hardening
+Goal: keep the local automation entrypoint explicit as its CLI surface evolves.
+
+- [ ] Add regression coverage that verifies `tools/run_playbook_check.py` forwards a custom `--inventory-out` path to `tools/validate_playbook.py`.
+
+Exit criteria:
+- Local regression tests fail when the wrapper stops honoring its documented `--inventory-out` CLI override.
 
 ## Dependencies
 - `m2` depends on the validation framework from `m1`.

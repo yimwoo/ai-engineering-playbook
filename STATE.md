@@ -1,23 +1,23 @@
 ---
 mode: execute
-current_milestone: m4
-next_action: Add regression coverage that verifies `.github/workflows/playbook-check.yml` still runs on `ubuntu-latest`.
+current_milestone: m5
+next_action: Add regression coverage that verifies `tools/run_playbook_check.py` forwards a custom `--inventory-out` path to `tools/validate_playbook.py`.
 last_outcome: CODE_LANDED
 last_commit: none
-last_session_date: 2026-05-03
+last_session_date: 2026-05-04
 ---
 
 # STATE
 
 ## Last Session
-- task: add workflow regression coverage for workflow triggers and Python version pinning
+- task: add workflow regression coverage for the GitHub Actions runner label
 - changes:
-  - added workflow regression coverage that pins `.github/workflows/playbook-check.yml` to `push` and `pull_request` events
-  - added workflow regression coverage that pins the workflow's Python runtime to 3.11
+  - added regression coverage that treats `.github/workflows/playbook-check.yml` runner selection as part of the canonical workflow contract
+  - closed the last unchecked `m4` roadmap task and queued a small wrapper CLI follow-up under new milestone `m5`
 - verification:
   - `python3 -m unittest tests.test_validate_playbook`: pass
 - commits:
-  - pending: `m4: add workflow trigger contract regression coverage`
+  - pending: `m4: add workflow runner regression coverage`
 - push: deferred
 
 ## Blockers
@@ -27,7 +27,7 @@ last_session_date: 2026-05-03
 - none
 
 ## Opportunities
-- Add regression coverage for workflow runner selection so CI environment drift is caught alongside workflow command drift.
+- Add regression coverage for `tools/run_playbook_check.py` subprocess ordering so future wrapper edits cannot reorder validation and inventory generation unexpectedly.
 
 ## Notes
 - The repository is currently documentation-first; executable validation needs to be introduced incrementally with standard-library tooling.
@@ -38,4 +38,5 @@ last_session_date: 2026-05-03
 - `tools/validate_playbook.py --inventory-out <path>` emits deterministic JSON with top-level prompt/template paths and per-example/per-starter-kit file inventories sorted for stable diffs.
 - `tools/run_playbook_check.py` is the canonical automation entrypoint; GitHub Actions writes its inventory artifact to `.agent/artifacts/playbook-inventory.json`.
 - `tests/test_validate_playbook.py` now treats `.github/workflows/playbook-check.yml` as a regression surface for the wrapper command and inventory artifact contract.
+- `tests/test_validate_playbook.py` now treats the workflow runner label (`runs-on: ubuntu-latest`) as part of the canonical CI contract alongside triggers and Python version pinning.
 - `STATE.md` cannot self-report the sha of the commit that contains it; use the final session outcome block or `git log -1 --oneline` for the exact landed commit.

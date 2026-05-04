@@ -179,6 +179,11 @@ class ValidatePlaybookTest(unittest.TestCase):
 
         self.assertIn('python-version: "3.11"', workflow_text)
 
+    def test_workflow_runs_on_ubuntu_latest(self) -> None:
+        workflow_text = WORKFLOW_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("runs-on: ubuntu-latest", workflow_text)
+
     def test_workflow_uploads_expected_inventory_artifact(self) -> None:
         workflow_text = WORKFLOW_PATH.read_text(encoding="utf-8")
 
