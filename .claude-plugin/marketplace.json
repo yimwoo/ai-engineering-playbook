@@ -1,0 +1,14 @@
+{
+  "name": "ai-engineering-playbook",
+  "description": "Claude Code plugin marketplace for AI Engineering Playbook workflows.",
+  "owner": {
+    "name": "AI Engineering Playbook Maintainers"
+  },
+  "plugins": [
+    {
+      "name": "ai-engineering-playbook",
+      "description": "Focused Claude Code skills for adopting, planning, implementing, reviewing, and handing off AI Engineering Playbook work.",
+      "source": "./plugins/ai-engineering-playbook"
+    }
+  ]
+}

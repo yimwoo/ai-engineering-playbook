@@ -60,6 +60,14 @@ Claude Code-specific prompt tuning is fine if:
 - the base repo workflow still works with another tool
 - the repo artifacts remain the primary memory system
 
+## Optional Claude Code Plugin
+This repository includes an optional Claude Code plugin package:
+- marketplace: `.claude-plugin/marketplace.json`
+- plugin: `plugins/ai-engineering-playbook/`
+- skills: adoption, orchestration, planning, implementation, and review
+
+Use the plugin to improve Claude Code activation and workflow recall. Do not use it as hidden project memory. Durable state, decisions, task scope, status, and handoffs should remain in normal repository files.
+
 ## Recommended Prompts To Use First
 - `prompts/orchestrator-kickoff.md`
 - `prompts/architecture-analysis.md`

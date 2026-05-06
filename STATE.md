@@ -4,20 +4,25 @@ current_milestone: m5
 next_action: Add regression coverage that verifies `tools/run_playbook_check.py` forwards a custom `--inventory-out` path to `tools/validate_playbook.py`.
 last_outcome: CODE_LANDED
 last_commit: none
-last_session_date: 2026-05-04
+last_session_date: 2026-05-06
 ---
 
 # STATE
 
 ## Last Session
-- task: add workflow regression coverage for the GitHub Actions runner label
+- task: add Claude Code plugin packaging for AI Engineering Playbook
 - changes:
-  - added regression coverage that treats `.github/workflows/playbook-check.yml` runner selection as part of the canonical workflow contract
-  - closed the last unchecked `m4` roadmap task and queued a small wrapper CLI follow-up under new milestone `m5`
+  - added a root Claude Code marketplace manifest at `.claude-plugin/marketplace.json`
+  - added an installable `plugins/ai-engineering-playbook/` package with focused skills for adoption, orchestration, planning, implementation, and review
+  - added a design note for the plugin boundary and validation contract
+  - extended the playbook validator and tests so plugin metadata, skill frontmatter, and plugin inventory are executable regression surfaces
+  - documented the optional plugin in the README and Claude Code adapter
 - verification:
-  - `python3 -m unittest tests.test_validate_playbook`: pass
+  - `python3 tools/run_playbook_check.py --inventory-out .agent/artifacts/playbook-inventory.json`: pass
+  - `claude plugin validate .claude-plugin/marketplace.json`: pass
+  - `claude plugin validate plugins/ai-engineering-playbook`: pass
 - commits:
-  - pending: `m4: add workflow runner regression coverage`
+  - landed: `add claude code plugin package`
 - push: deferred
 
 ## Blockers
@@ -28,6 +33,7 @@ last_session_date: 2026-05-04
 
 ## Opportunities
 - Add regression coverage for `tools/run_playbook_check.py` subprocess ordering so future wrapper edits cannot reorder validation and inventory generation unexpectedly.
+- Consider adding an optional CI job or release checklist step for `claude plugin validate` when Claude Code is available, while keeping the canonical local validator free of non-standard-library dependencies.
 
 ## Notes
 - The repository is currently documentation-first; executable validation needs to be introduced incrementally with standard-library tooling.
@@ -39,4 +45,6 @@ last_session_date: 2026-05-04
 - `tools/run_playbook_check.py` is the canonical automation entrypoint; GitHub Actions writes its inventory artifact to `.agent/artifacts/playbook-inventory.json`.
 - `tests/test_validate_playbook.py` now treats `.github/workflows/playbook-check.yml` as a regression surface for the wrapper command and inventory artifact contract.
 - `tests/test_validate_playbook.py` now treats the workflow runner label (`runs-on: ubuntu-latest`) as part of the canonical CI contract alongside triggers and Python version pinning.
+- The Claude Code plugin package is an optional adapter; durable project state should remain in repo files, not plugin-only memory.
+- Claude Code 2.1.131 locally validates the marketplace and plugin manifests; `tools/validate_playbook.py` mirrors the important package checks with standard-library Python so CI does not require Claude Code.
 - `STATE.md` cannot self-report the sha of the commit that contains it; use the final session outcome block or `git log -1 --oneline` for the exact landed commit.

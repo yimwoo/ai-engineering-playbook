@@ -1,0 +1,8 @@
+{
+  "name": "ai-engineering-playbook",
+  "description": "Focused Claude Code skills for using AI Engineering Playbook workflows in real repositories.",
+  "version": "0.1.0",
+  "author": {
+    "name": "AI Engineering Playbook Maintainers"
+  }
+}

@@ -9,11 +9,16 @@ from unittest import mock
 
 from tools.validate_playbook import (
     CHECKS,
+    CLAUDE_MARKETPLACE_PATH,
+    CLAUDE_PLUGIN_NAME,
+    CLAUDE_PLUGIN_ROOT,
+    CLAUDE_PLUGIN_SKILLS,
     RELATIVE_LINK_CHECKS,
     generate_inventory,
     iter_relative_link_targets,
     iter_tracked_paths,
     main,
+    validate_claude_plugin_package,
     validate_playbook,
     validate_relative_link_check,
     validate_structure_check,
@@ -38,6 +43,9 @@ class ValidatePlaybookTest(unittest.TestCase):
 
     def test_repo_validation_passes(self) -> None:
         self.assertEqual(validate_playbook(REPO_ROOT), [])
+
+    def test_claude_code_plugin_package_passes_in_repo(self) -> None:
+        self.assertEqual(validate_claude_plugin_package(REPO_ROOT), [])
 
     def test_relative_link_target_extraction_skips_external_links(self) -> None:
         markdown = "\n".join(
@@ -142,6 +150,98 @@ class ValidatePlaybookTest(unittest.TestCase):
             "handoffs/_template.md",
             inventory["starter_kits"][0]["files"],
         )
+        self.assertEqual(
+            inventory["claude_plugin_marketplace"],
+            CLAUDE_MARKETPLACE_PATH,
+        )
+        claude_plugin = next(
+            item
+            for item in inventory["claude_plugins"]
+            if item["name"] == CLAUDE_PLUGIN_NAME
+        )
+        self.assertEqual(claude_plugin["path"], CLAUDE_PLUGIN_ROOT)
+        self.assertIn(
+            ".claude-plugin/plugin.json",
+            claude_plugin["files"],
+        )
+        self.assertIn(
+            "skills/adopting-playbook/SKILL.md",
+            claude_plugin["files"],
+        )
+
+    def test_missing_claude_plugin_skill_reference_reports_failure(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            repo_root = Path(tmp_dir)
+            marketplace_path = repo_root / CLAUDE_MARKETPLACE_PATH
+            marketplace_path.parent.mkdir(parents=True)
+            marketplace_path.write_text(
+                json.dumps(
+                    {
+                        "name": CLAUDE_PLUGIN_NAME,
+                        "plugins": [
+                            {
+                                "name": CLAUDE_PLUGIN_NAME,
+                                "source": f"./{CLAUDE_PLUGIN_ROOT}",
+                            }
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            plugin_root = repo_root / CLAUDE_PLUGIN_ROOT
+            manifest_path = plugin_root / ".claude-plugin" / "plugin.json"
+            manifest_path.parent.mkdir(parents=True)
+            manifest_path.write_text(
+                json.dumps(
+                    {
+                        "name": CLAUDE_PLUGIN_NAME,
+                        "description": "Test plugin",
+                        "version": "0.1.0",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (plugin_root / "README.md").write_text("Plugin README\n", encoding="utf-8")
+
+            for skill_name in CLAUDE_PLUGIN_SKILLS:
+                skill_dir = plugin_root / "skills" / skill_name
+                skill_dir.mkdir(parents=True)
+                skill_dir.joinpath("SKILL.md").write_text(
+                    "\n".join(
+                        (
+                            "---",
+                            f"name: {skill_name}",
+                            (
+                                "description: A focused test description for "
+                                "validating Claude Code skill frontmatter."
+                            ),
+                            "---",
+                            "",
+                            "# Skill",
+                        )
+                    ),
+                    encoding="utf-8",
+                )
+                skill_dir.joinpath("reference.md").write_text(
+                    "# Reference\n",
+                    encoding="utf-8",
+                )
+
+            missing_reference = (
+                plugin_root
+                / "skills"
+                / CLAUDE_PLUGIN_SKILLS[0]
+                / "reference.md"
+            )
+            missing_reference.unlink()
+
+            errors = validate_claude_plugin_package(repo_root)
+
+            self.assertIn(
+                f"claude plugin: missing `{missing_reference}`",
+                errors,
+            )
 
     def test_main_writes_inventory_json(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:

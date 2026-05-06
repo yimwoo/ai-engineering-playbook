@@ -70,6 +70,7 @@ This repo is designed for teams and builders asking questions like:
 - [Monorepo and Multi-Project Adoption](docs/monorepo-and-multi-project-adoption.md)
 - [Messy Existing Repo Rescue Guide](docs/messy-existing-repo-rescue.md)
 - [GitHub Metadata Suggestions](docs/github-metadata-suggestions.md)
+- [Claude Code Plugin](plugins/ai-engineering-playbook/README.md)
 
 ---
 
@@ -204,6 +205,13 @@ Tool-specific mapping notes for:
 
 These adapter docs explain how to use the same playbook with different agents without making the workflow depend on one tool.
 
+### `.claude-plugin/`, `plugins/`
+Optional Claude Code plugin packaging:
+- [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json) exposes this repo as a Claude Code plugin marketplace
+- [`plugins/ai-engineering-playbook/`](plugins/ai-engineering-playbook/) contains focused skills for adoption, orchestration, planning, implementation, and review
+
+The plugin is an adapter, not the source of truth. Project memory should still live in ordinary repo files so the workflow remains portable across Claude Code, Codex, and similar agents.
+
 ### `examples/`
 Worked examples for:
 - startup-lightweight projects
@@ -289,6 +297,7 @@ If you are:
 - evaluating a new code agent → use [adapters/generic-agent-checklist.md](adapters/generic-agent-checklist.md) and [adapters/agent-evaluation-scorecard.md](adapters/agent-evaluation-scorecard.md)
 - trying to use this repo day-to-day without overhead → read [Daily Path](docs/daily-path.md)
 - reviewing your first real use of the playbook → read [First Real-Use Retrospective Guide](docs/first-real-use-retrospective-guide.md)
+- using Claude Code plugin support → install the [AI Engineering Playbook Claude Code Plugin](plugins/ai-engineering-playbook/README.md)
 
 ---
 
