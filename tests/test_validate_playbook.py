@@ -311,6 +311,31 @@ class ValidatePlaybookTest(unittest.TestCase):
         )
 
     @mock.patch("tools.run_playbook_check.subprocess.run")
+    def test_run_playbook_check_forwards_custom_inventory_path(
+        self, run_mock: mock.Mock
+    ) -> None:
+        run_mock.return_value.returncode = 0
+        custom_inventory_path = Path(".agent/custom/inventory.json")
+
+        exit_code = run_playbook_check_main(
+            ["--inventory-out", str(custom_inventory_path)]
+        )
+
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(
+            [call.args[0] for call in run_mock.call_args_list],
+            [
+                [sys.executable, "-m", "unittest", "tests.test_validate_playbook"],
+                [
+                    sys.executable,
+                    "tools/validate_playbook.py",
+                    "--inventory-out",
+                    str(custom_inventory_path),
+                ],
+            ],
+        )
+
+    @mock.patch("tools.run_playbook_check.subprocess.run")
     def test_run_playbook_check_stops_after_first_failure(self, run_mock: mock.Mock) -> None:
         run_mock.return_value.returncode = 1
 

@@ -1,29 +1,26 @@
 ---
 mode: execute
 current_milestone: m5
-next_action: Add regression coverage that verifies `tools/run_playbook_check.py` forwards a custom `--inventory-out` path to `tools/validate_playbook.py`.
+next_action: Add regression coverage for `tools/run_playbook_check.py` subprocess ordering so future wrapper edits cannot reorder validation and inventory generation unexpectedly.
 last_outcome: CODE_LANDED
 last_commit: none
-last_session_date: 2026-05-06
+last_session_date: 2026-05-10
 ---
 
 # STATE
 
 ## Last Session
-- task: add Claude Code plugin packaging for AI Engineering Playbook
+- task: add wrapper CLI custom inventory path regression coverage
 - changes:
-  - added a root Claude Code marketplace manifest at `.claude-plugin/marketplace.json`
-  - added an installable `plugins/ai-engineering-playbook/` package with focused skills for adoption, orchestration, planning, implementation, and review
-  - added a design note for the plugin boundary and validation contract
-  - extended the playbook validator and tests so plugin metadata, skill frontmatter, and plugin inventory are executable regression surfaces
-  - documented the optional plugin in the README and Claude Code adapter
+  - added a mocked subprocess regression test for `tools/run_playbook_check.py --inventory-out <path>`
+  - verified the wrapper forwards custom inventory paths to `tools/validate_playbook.py`
+  - marked the `m5` wrapper CLI hardening task complete in `ROADMAP.md`
 - verification:
+  - `python3 -m unittest tests.test_validate_playbook`: pass
   - `python3 tools/run_playbook_check.py --inventory-out .agent/artifacts/playbook-inventory.json`: pass
-  - `claude plugin validate .claude-plugin/marketplace.json`: pass
-  - `claude plugin validate plugins/ai-engineering-playbook`: pass
 - commits:
-  - landed: `add claude code plugin package`
-- push: deferred
+  - landed: `m5: add wrapper inventory override regression coverage`
+- push: landed
 
 ## Blockers
 - none
@@ -48,3 +45,4 @@ last_session_date: 2026-05-06
 - The Claude Code plugin package is an optional adapter; durable project state should remain in repo files, not plugin-only memory.
 - Claude Code 2.1.131 locally validates the marketplace and plugin manifests; `tools/validate_playbook.py` mirrors the important package checks with standard-library Python so CI does not require Claude Code.
 - `STATE.md` cannot self-report the sha of the commit that contains it; use the final session outcome block or `git log -1 --oneline` for the exact landed commit.
+- `tests/test_validate_playbook.py` now covers both the default and custom `--inventory-out` wrapper paths with mocked subprocess calls.

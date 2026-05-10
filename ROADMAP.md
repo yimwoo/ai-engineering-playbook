@@ -53,7 +53,7 @@ Exit criteria:
 ### `m5` Wrapper CLI hardening
 Goal: keep the local automation entrypoint explicit as its CLI surface evolves.
 
-- [ ] Add regression coverage that verifies `tools/run_playbook_check.py` forwards a custom `--inventory-out` path to `tools/validate_playbook.py`.
+- [x] Add regression coverage that verifies `tools/run_playbook_check.py` forwards a custom `--inventory-out` path to `tools/validate_playbook.py`.
 
 Exit criteria:
 - Local regression tests fail when the wrapper stops honoring its documented `--inventory-out` CLI override.
