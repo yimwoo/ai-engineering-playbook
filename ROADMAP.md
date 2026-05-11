@@ -54,14 +54,25 @@ Exit criteria:
 Goal: keep the local automation entrypoint explicit as its CLI surface evolves.
 
 - [x] Add regression coverage that verifies `tools/run_playbook_check.py` forwards a custom `--inventory-out` path to `tools/validate_playbook.py`.
+- [x] Add regression coverage that verifies `tools/run_playbook_check.py` runs inventory generation only after the unit test command succeeds.
 
 Exit criteria:
 - Local regression tests fail when the wrapper stops honoring its documented `--inventory-out` CLI override.
+- Local regression tests fail when the wrapper reorders tests and inventory generation.
+
+### `m6` Claude plugin validation hardening
+Goal: keep the optional Claude Code plugin package aligned with its marketplace and manifest contracts.
+
+- [ ] Add regression coverage that verifies `tools/validate_playbook.py` rejects a marketplace plugin source that does not match `./plugins/ai-engineering-playbook`.
+
+Exit criteria:
+- Local regression tests fail when the bundled plugin marketplace points at the wrong package root.
 
 ## Dependencies
 - `m2` depends on the validation framework from `m1`.
 - `m3` depends on the shared repository traversal helpers introduced in `m1` or `m2`.
 - `m4` depends on the canonical check wiring from `m3`.
+- `m6` depends on the Claude Code plugin package checks added before `m5`.
 
 ## Risks
 - Repo guidance may continue to drift faster than validation coverage if new content lands without tests.

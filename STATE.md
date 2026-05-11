@@ -1,25 +1,25 @@
 ---
 mode: execute
-current_milestone: m5
-next_action: Add regression coverage for `tools/run_playbook_check.py` subprocess ordering so future wrapper edits cannot reorder validation and inventory generation unexpectedly.
+current_milestone: m6
+next_action: Add regression coverage that `tools/validate_playbook.py` rejects a Claude plugin marketplace source that does not match `./plugins/ai-engineering-playbook`.
 last_outcome: CODE_LANDED
 last_commit: none
-last_session_date: 2026-05-10
+last_session_date: 2026-05-11
 ---
 
 # STATE
 
 ## Last Session
-- task: add wrapper CLI custom inventory path regression coverage
+- task: add wrapper subprocess ordering regression coverage
 - changes:
-  - added a mocked subprocess regression test for `tools/run_playbook_check.py --inventory-out <path>`
-  - verified the wrapper forwards custom inventory paths to `tools/validate_playbook.py`
-  - marked the `m5` wrapper CLI hardening task complete in `ROADMAP.md`
+  - added a mocked subprocess regression test covering the unit-test-then-inventory command order when inventory generation fails
+  - verified the wrapper returns the inventory generation failure after running the commands in order
+  - marked the `m5` wrapper ordering coverage task complete and added the next `m6` plugin validation task
 - verification:
   - `python3 -m unittest tests.test_validate_playbook`: pass
   - `python3 tools/run_playbook_check.py --inventory-out .agent/artifacts/playbook-inventory.json`: pass
 - commits:
-  - landed: `m5: add wrapper inventory override regression coverage`
+  - landed: `m5: add wrapper subprocess ordering regression coverage`
 - push: landed
 
 ## Blockers
@@ -29,7 +29,6 @@ last_session_date: 2026-05-10
 - none
 
 ## Opportunities
-- Add regression coverage for `tools/run_playbook_check.py` subprocess ordering so future wrapper edits cannot reorder validation and inventory generation unexpectedly.
 - Consider adding an optional CI job or release checklist step for `claude plugin validate` when Claude Code is available, while keeping the canonical local validator free of non-standard-library dependencies.
 
 ## Notes
@@ -46,3 +45,4 @@ last_session_date: 2026-05-10
 - Claude Code 2.1.131 locally validates the marketplace and plugin manifests; `tools/validate_playbook.py` mirrors the important package checks with standard-library Python so CI does not require Claude Code.
 - `STATE.md` cannot self-report the sha of the commit that contains it; use the final session outcome block or `git log -1 --oneline` for the exact landed commit.
 - `tests/test_validate_playbook.py` now covers both the default and custom `--inventory-out` wrapper paths with mocked subprocess calls.
+- `tests/test_validate_playbook.py` now verifies the wrapper preserves unit-test-then-inventory subprocess ordering even when the inventory generation command fails.
